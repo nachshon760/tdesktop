@@ -30,6 +30,8 @@ enum {
 	WrongPasscodeTimeout = 1500,
 
 	ChoosePeerByDragTimeout = 1000, // 1 second mouse not moved to choose dialog when dragging a file
+
+	MTPCurrentLayer = 169, // Current MTProto API layer supported
 };
 
 inline const char *cGUIDStr() {
@@ -68,46 +70,4 @@ constexpr auto ApiHash = QT_STRINGIFY(TDESKTOP_API_HASH);
 // To build your version of Telegram Desktop you're required to provide
 // your own 'api_id' and 'api_hash' for the Telegram API access.
 //
-// How to obtain your 'api_id' and 'api_hash' is described here:
-// https://core.telegram.org/api/obtaining_api_id
-//
-// If you're building the application not for deployment,
-// but only for test purposes you can comment out the error below.
-//
-// This will allow you to use TEST ONLY 'api_id' and 'api_hash' which are
-// very limited by the Telegram API server.
-//
-// Your users will start getting internal server errors on login
-// if you deploy an app using those 'api_id' and 'api_hash'.
-
-#error You are required to provide API_ID and API_HASH.
-
-constexpr auto ApiId = 17349;
-constexpr auto ApiHash = "344583e45741c457fe1862106095a5eb";
-
-#endif // TDESKTOP_API_ID && TDESKTOP_API_HASH
-
-#if Q_BYTE_ORDER == Q_BIG_ENDIAN
-#error "Only little endian is supported!"
-#endif // Q_BYTE_ORDER == Q_BIG_ENDIAN
-
-#if (TDESKTOP_ALPHA_VERSION != 0)
-
-// Private key for downloading closed alphas.
-#include "../../../DesktopPrivate/alpha_private.h"
-
-#else
-static const char *AlphaPrivateKey = "";
-#endif
-
-extern QString gKeyFile;
-inline const QString &cDataFile() {
-	if (!gKeyFile.isEmpty()) return gKeyFile;
-	static const QString res(u"data"_q);
-	return res;
-}
-
-inline const QRegularExpression &cRussianLetters() {
-	static QRegularExpression regexp(QString::fromUtf8("[а-яА-ЯёЁ]"));
-	return regexp;
-}
+// How to obtain your 'api_id' and 'api_hash' is
